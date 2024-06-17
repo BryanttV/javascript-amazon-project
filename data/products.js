@@ -469,4 +469,24 @@ const products = [
     priceCents: 2400,
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
+  {
+    id: "ae1234bc-5678-90de-f123-456789abcdef",
+    image: "images/products/backpack.jpg",
+    name: "Black Backpack",
+    rating: {
+      stars: 4,
+      count: 250,
+    },
+    priceCents: 5800,
+  },
+  {
+    id: "bc5678ef-1234-5678-90ab-cdef12345678",
+    image: "images/products/umbrella.jpg",
+    name: "Green Umbrella",
+    rating: {
+      stars: 5,
+      count: 400,
+    },
+    priceCents: 700,
+  },
 ];
