@@ -126,16 +126,22 @@ document.querySelectorAll(".js-save-quantity-link").forEach((link) => {
   link.addEventListener("click", () => {
     const { productId } = link.dataset;
 
+    const inputElement = document.querySelector(
+      `.js-quantity-input-${productId}`
+    );
+    const newQuantity = Number(inputElement.value);
+
+    if (newQuantity <= 0 || newQuantity > 1000) {
+      alert("Quantity must be at least 0 and less than 1000");
+      return;
+    }
+
+    updateQuantity(productId, newQuantity);
+
     const container = document.querySelector(
       `.js-cart-item-container-${productId}`
     );
     container.classList.remove("is-editing-quantity");
-
-    const newQuantity = Number(
-      document.querySelector(`.js-quantity-input-${productId}`).value
-    );
-
-    updateQuantity(productId, newQuantity);
 
     document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
       newQuantity;
