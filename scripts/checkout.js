@@ -44,7 +44,7 @@ cart.forEach((cartItem) => {
                 <span class="update-quantity-link link-primary js-update-link" data-product-id="${productId}">
                 Update
                 </span>
-                <input class="quantity-input js-quantity-input-${productId}">
+                <input class="quantity-input js-quantity-input js-quantity-input-${productId}" data-product-id="${productId}">
                 <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${productId}">Save</span>
                 <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${productId}">
                 Delete
@@ -131,24 +131,38 @@ document.querySelectorAll(".js-save-quantity-link").forEach((link) => {
     );
     const newQuantity = Number(inputElement.value);
 
-    if (newQuantity <= 0 || newQuantity > 1000) {
-      alert("Quantity must be at least 0 and less than 1000");
-      return;
-    }
-
-    updateQuantity(productId, newQuantity);
-
-    const container = document.querySelector(
-      `.js-cart-item-container-${productId}`
-    );
-    container.classList.remove("is-editing-quantity");
-
-    document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
-      newQuantity;
-
-    updateCartQuantity();
+    saveCartQuantity(productId, newQuantity);
   });
 });
+
+document.querySelectorAll(".js-quantity-input").forEach((input) => {
+  input.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+      const { productId } = input.dataset;
+      const newQuantity = Number(input.value);
+      saveCartQuantity(productId, newQuantity);
+    }
+  });
+});
+
+function saveCartQuantity(productId, newQuantity) {
+  if (newQuantity <= 0 || newQuantity > 1000) {
+    alert("Quantity must be at least 0 and less than 1000");
+    return;
+  }
+
+  updateQuantity(productId, newQuantity);
+
+  const container = document.querySelector(
+    `.js-cart-item-container-${productId}`
+  );
+  container.classList.remove("is-editing-quantity");
+
+  document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
+    newQuantity;
+
+  updateCartQuantity();
+}
 
 function updateCartQuantity() {
   const cartQuantity = calculateCartQuantity();
