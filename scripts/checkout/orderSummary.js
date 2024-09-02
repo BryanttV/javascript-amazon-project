@@ -1,6 +1,5 @@
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import {
-  calculateCartQuantity,
   cart,
   removeFromCart,
   updateDeliveryOption,
@@ -176,17 +175,5 @@ export function renderOrderSummary() {
 
     document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
       newQuantity;
-
-    updateCartQuantity();
   }
-
-  function updateCartQuantity() {
-    const cartQuantity = calculateCartQuantity();
-
-    document.querySelector(
-      ".js-return-to-home-link"
-    ).innerHTML = `${cartQuantity} items`;
-  }
-
-  updateCartQuantity();
 }
