@@ -110,7 +110,6 @@ export function renderOrderSummary() {
       const { productId } = link.dataset;
       removeFromCart(productId);
       renderOrderSummary();
-      updateCartQuantity();
       renderPaymentSummary();
     });
   });
