@@ -11,6 +11,7 @@ import {
 } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import formatCurrency from "../utils/money.js";
+import { renderCheckoutHeader } from "./checkoutHeader.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 
 export function renderOrderSummary() {
@@ -109,6 +110,7 @@ export function renderOrderSummary() {
     link.addEventListener("click", () => {
       const { productId } = link.dataset;
       removeFromCart(productId);
+      renderCheckoutHeader();
       renderOrderSummary();
       renderPaymentSummary();
     });
@@ -144,6 +146,7 @@ export function renderOrderSummary() {
       const newQuantity = Number(inputElement.value);
 
       saveCartQuantity(productId, newQuantity);
+      renderCheckoutHeader();
       renderPaymentSummary();
     });
   });
@@ -154,6 +157,7 @@ export function renderOrderSummary() {
         const { productId } = input.dataset;
         const newQuantity = Number(input.value);
         saveCartQuantity(productId, newQuantity);
+        renderCheckoutHeader();
         renderPaymentSummary();
       }
     });
