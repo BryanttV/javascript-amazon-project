@@ -51,7 +51,7 @@ export function renderOrderSummary() {
                 Update
                 </span>
                 <input class="quantity-input js-quantity-input js-quantity-input-${productId}" data-product-id="${productId}">
-                <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${productId}">Save</span>
+                <span class="save-quantity-link link-primary js-save-link" data-product-id="${productId}">Save</span>
                 <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${productId}">
                 Delete
                 </span>
@@ -132,7 +132,7 @@ export function renderOrderSummary() {
     });
   });
 
-  document.querySelectorAll(".js-save-quantity-link").forEach((link) => {
+  document.querySelectorAll(".js-save-link").forEach((link) => {
     link.addEventListener("click", () => {
       const { productId } = link.dataset;
 
@@ -142,8 +142,6 @@ export function renderOrderSummary() {
       const newQuantity = Number(inputElement.value);
 
       saveCartQuantity(productId, newQuantity);
-      renderCheckoutHeader();
-      renderPaymentSummary();
     });
   });
 
@@ -153,8 +151,6 @@ export function renderOrderSummary() {
         const { productId } = input.dataset;
         const newQuantity = Number(input.value);
         saveCartQuantity(productId, newQuantity);
-        renderCheckoutHeader();
-        renderPaymentSummary();
       }
     });
   });
@@ -172,7 +168,8 @@ export function renderOrderSummary() {
     );
     container.classList.remove("is-editing-quantity");
 
-    document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
-      newQuantity;
+    renderOrderSummary();
+    renderCheckoutHeader();
+    renderPaymentSummary();
   }
 }
