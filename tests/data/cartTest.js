@@ -1,9 +1,10 @@
 import { addToCart, cart, loadFromStorage } from "../../data/cart.js";
 
 describe("test suite: addToCart", () => {
-  it("adds an existing product to the cart", () => {
+  beforeEach(() => {
     spyOn(localStorage, "setItem");
-
+  });
+  it("adds an existing product to the cart", () => {
     spyOn(localStorage, "getItem").and.callFake(() => {
       return JSON.stringify([
         {
@@ -33,8 +34,6 @@ describe("test suite: addToCart", () => {
   });
 
   it("adds a new product to the cart ", () => {
-    spyOn(localStorage, "setItem");
-
     spyOn(localStorage, "getItem").and.callFake(() => {
       return JSON.stringify([]);
     });
