@@ -1,10 +1,13 @@
 import { cart, loadFromStorage } from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
+import formatCurrency from "../../scripts/utils/money.js";
 
 describe("test suite: renderOrderSummary", () => {
   const productId1 = "e43638ce-6aa0-4b85-b27f-e1d07eb678c6";
   const productId2 = "15b6fc6f-327a-4ec4-896f-486349e85a3d";
+  const product1 = getProduct(productId1);
+  const product2 = getProduct(productId2);
 
   beforeEach(() => {
     spyOn(localStorage, "setItem");
@@ -49,10 +52,16 @@ describe("test suite: renderOrderSummary", () => {
     ).toContain("Quantity: 1");
     expect(
       document.querySelector(`.js-product-name-${productId1}`).innerText
-    ).toContain(getProduct(productId1).name);
+    ).toContain(product1.name);
     expect(
       document.querySelector(`.js-product-name-${productId2}`).innerText
-    ).toContain(getProduct(productId2).name);
+    ).toContain(product2.name);
+    expect(
+      document.querySelector(`.js-product-price-${productId1}`).innerText
+    ).toContain(formatCurrency(product1.priceCents));
+    expect(
+      document.querySelector(`.js-product-price-${productId2}`).innerText
+    ).toContain(formatCurrency(product2.priceCents));
   });
 
   it("removes a product", () => {
@@ -69,7 +78,10 @@ describe("test suite: renderOrderSummary", () => {
     ).not.toEqual(null);
     expect(
       document.querySelector(`.js-product-name-${productId2}`).innerText
-    ).toContain(getProduct(productId2).name);
+    ).toContain(product2.name);
+    expect(
+      document.querySelector(`.js-product-price-${productId2}`).innerText
+    ).toContain(formatCurrency(product2.priceCents));
     expect(cart.length).toEqual(1);
     expect(cart[0].productId).toEqual(productId2);
   });
