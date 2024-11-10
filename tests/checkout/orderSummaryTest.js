@@ -1,4 +1,5 @@
 import { cart, loadFromStorage } from "../../data/cart.js";
+import { getProduct } from "../../data/products.js";
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 
 describe("test suite: renderOrderSummary", () => {
@@ -46,6 +47,12 @@ describe("test suite: renderOrderSummary", () => {
     expect(
       document.querySelector(`.js-product-quantity-${productId2}`).innerText
     ).toContain("Quantity: 1");
+    expect(
+      document.querySelector(`.js-product-name-${productId1}`).innerText
+    ).toContain(getProduct(productId1).name);
+    expect(
+      document.querySelector(`.js-product-name-${productId2}`).innerText
+    ).toContain(getProduct(productId2).name);
   });
 
   it("removes a product", () => {
@@ -60,6 +67,9 @@ describe("test suite: renderOrderSummary", () => {
     expect(
       document.querySelector(`.js-cart-item-container-${productId2}`)
     ).not.toEqual(null);
+    expect(
+      document.querySelector(`.js-product-name-${productId2}`).innerText
+    ).toContain(getProduct(productId2).name);
     expect(cart.length).toEqual(1);
     expect(cart[0].productId).toEqual(productId2);
   });
